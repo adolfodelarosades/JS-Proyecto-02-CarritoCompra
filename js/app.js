@@ -27,8 +27,8 @@ function leerDatosCurso(curso){
         precio: curso.querySelector('.precio span').textContent,
         id: curso.querySelector('a').getAttribute('data-id')
     }
-    console.log(curso);
-    console.log(infoCurso);
+    //console.log(curso);
+    //console.log(infoCurso);
 
     insertarCarrito(infoCurso);
 }
@@ -47,6 +47,9 @@ function insertarCarrito(curso){
         </td>
     `;
     listaCursos.appendChild(row);
+
+    //Guardar los cursos en el Local Storage
+    guardarCursoLocalStorage(curso);
 }
 
 //Elimina el curso del carrito
@@ -70,6 +73,34 @@ function vaciarCarrito(){
         listaCursos.removeChild(listaCursos.firstChild);
     }
     return false;
+}
+
+//Almacena cursos en el carrito a Local Storage
+function guardarCursoLocalStorage(curso){
+    //console.log(curso);
+    let cursos;
+
+    //Recupera los cursos del Local Storage
+    cursos = obtenerCursosLocalStorage();
+    //El curso seleccionado se agrega al arreglo
+    cursos.push(curso);
+    console.log(cursos);
+
+    //Almacena el arreglo como un string en el Local Storage
+    localStorage.setItem('cursos', JSON.stringify(cursos) );
+}
+
+//Recupera cursos del Local Storage
+function obtenerCursosLocalStorage() {
+    let cursosLS;
+
+    //Comprobamos si hay algo en el Local Storage
+    if( localStorage.getItem('cursos') === null){
+        cursosLS = [];
+    } else {
+        cursosLS = JSON.parse( localStorage.getItem('cursos'));
+    }
+    return cursosLS;
 }
 
 // Detecta todos los lisners
