@@ -57,11 +57,16 @@ function insertarCarrito(curso){
 function eliminarCurso(e){
     e.preventDefault();
     
-    let curso;
+    let curso,
+        cursoId;
     if (e.target.classList.contains('borrar-curso')){
-        console.log(e.target.parentElement.parentElement);
+        //console.log(e.target.parentElement.parentElement);
         e.target.parentElement.parentElement.remove();
+        curso = e.target.parentElement.parentElement;
+        cursoId = curso.querySelector('a').getAttribute('data-id');
+        //console.log(cursoId);
     }
+    eliminarCursoLocalStorage(cursoId);
 }
 
 //Vaciar todo el Carrito de Compra
@@ -73,6 +78,10 @@ function vaciarCarrito(){
     while(listaCursos.firstChild){
         listaCursos.removeChild(listaCursos.firstChild);
     }
+
+    //Vaciar Local Storage
+    vaciarLocalStorage();
+
     return false;
 }
 
@@ -127,6 +136,25 @@ function leerLocalStorage(){
     });
 
     console.log(cursosLS);
+}
+
+//Elimina el curso por el ID de Local Storage
+function eliminarCursoLocalStorage(cursoID){
+    let cursosLS;
+    //Obtenemos el array de cursos desde el Local Storage
+    cursosLS = obtenerCursosLocalStorage();
+    //Iteramos comparando el ID del curso borrado con los del LS
+    cursosLS.forEach( function(cursoLS, index){        
+        if(cursoLS.id === cursoID) {
+            cursosLS.splice(index, 1);
+        }
+    });
+    //Añadimos el array actualizado al Local Storage
+    localStorage.setItem('cursos', JSON.stringify(cursosLS));    
+}
+
+function vaciarLocalStorage(){
+    localStorage.clear();
 }
 
 // Detecta todos los lisners
