@@ -35,6 +35,7 @@ function leerDatosCurso(curso){
 
 //Muestra el curso seleccionado en el Carrito
 function insertarCarrito(curso){
+    //Construir Template
     const row = document.createElement('tr');
     row.innerHTML = `
         <td>
@@ -103,6 +104,31 @@ function obtenerCursosLocalStorage() {
     return cursosLS;
 }
 
+//Imprime los cursos del Local Storage en el Carrito
+function leerLocalStorage(){
+    let cursosLS;
+
+    cursosLS = obtenerCursosLocalStorage();
+
+    cursosLS.forEach( function(curso){
+        //Construir Template
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>
+                <img src="${curso.imagen}" width=100 >
+            </td>
+            <td>${curso.titulo}</td>
+            <td>${curso.precio}</td>
+            <td>
+                <a href="#" class="borrar-curso" data-id="${curso.id}">X</a>
+            </td>
+        `;
+        listaCursos.appendChild(row);
+    });
+
+    console.log(cursosLS);
+}
+
 // Detecta todos los lisners
 function cargarEventsListers(){
     //Se dispara cuando se presiona "Agregar Curso"
@@ -113,6 +139,9 @@ function cargarEventsListers(){
 
     //Vaciar Carrito de Compra
     vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
+
+    //Al cargar aplicación, mostrar la lista de cursos almacenada en el Local Storage
+    document.addEventListener('DOMContentLoaded', leerLocalStorage);
 }
 
 //LISTENERS
