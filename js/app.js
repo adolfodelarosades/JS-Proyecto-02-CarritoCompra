@@ -48,10 +48,24 @@ function insertarCarrito(curso){
     listaCursos.appendChild(row);
 }
 
+//Elimina el curso del carrito
+function eliminarCurso(e){
+    e.preventDefault();
+    
+    let curso;
+    if (e.target.classList.contains('borrar-curso')){
+        console.log(e.target.parentElement.parentElement);
+        e.target.parentElement.parentElement.remove();
+    }
+}
+
 // Detecta todos los lisners
 function cargarEventsListers(){
     //Se dispara cuando se presiona "Agregar Curso"
     cursos.addEventListener('click', comprarCurso);
+
+    //Eliminar un curso del Carrito de Compra
+    carrito.addEventListener('click', eliminarCurso);
 }
 
 //LISTENERS
