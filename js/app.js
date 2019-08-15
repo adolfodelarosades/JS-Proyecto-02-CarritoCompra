@@ -63,7 +63,7 @@ function eliminarCurso(e){
 //Vaciar todo el Carrito de Compra
 function vaciarCarrito(){
     //Forma lenta
-    listaCursos.innerHTML = '';
+    //listaCursos.innerHTML = '';
 
     //Forma rápida (recomendada)
     while(listaCursos.firstChild){
